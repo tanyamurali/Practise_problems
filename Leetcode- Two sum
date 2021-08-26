@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int,int> hm;
+        
+        for(int a=0; a< nums.size();a++)
+        {
+            int c=target-nums[a];
+            cout<<"c "<<c<<"\n";
+            if(hm.find(c)!=hm.end()) 
+            {
+                return{a,hm[c]};
+            }
+            hm[nums[a]]=a; // key-> value in vector, val = index in vector
+            //cout<<"hm key "<< nums[a]<<"\n hm val "<<a
+        }
+        return {0,0};
+    }
+};
