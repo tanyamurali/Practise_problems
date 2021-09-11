@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+     
+        int begin_point=0, end_point= height.size()-1;
+        //cout<<end_point<<"\n";
+        int curr_area=0, max_area=numeric_limits<int>::min();
+        
+        while(begin_point<end_point)
+        {
+            curr_area= min(height[begin_point],height[end_point])*(end_point-begin_point);
+            if(curr_area>max_area) max_area= curr_area;
+            
+            if(height[begin_point]<height[end_point]) 
+            {
+                begin_point++;
+            }
+            else end_point--;
+        }
+        
+        return max_area;
+    }
+};
