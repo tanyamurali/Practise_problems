@@ -1,0 +1,76 @@
+class Solution {
+public:
+    
+    vector<string> tokenize(string paragraph)
+    {
+        vector<string> v1;
+        char x= paragraph[paragraph.size()-1];
+        if(x!=' '&& x!='!' && x!='?'&&x!=','&&x!=';'&&x!='.' && x!='\'')
+        {
+           paragraph.append("."); 
+        }
+        
+        cout<< paragraph<<"\n";
+        string s1="";
+        for(int i=0;i<paragraph.size();i++)
+        {
+            char x=paragraph[i];
+            if(x==' '|| x=='!' || x=='?'||x==','||x==';'||x=='.'||x=='\'')
+            {
+                if(s1.size()>0)
+                    v1.push_back(s1);
+                s1.clear();
+            }
+            else
+            {
+                s1=s1+x;
+            }
+        }
+  /*      char x= paragraph[paragraph.size()-1];
+        if(x!=' '&& x!='!' && x!='?'&&x!=','&&x!=';'&&x!='.')
+        {
+            
+        }*/
+        return v1;
+    }
+    string mostCommonWord(string paragraph, vector<string>& banned) {
+        
+        transform(paragraph.begin(), paragraph.end(), paragraph.begin(), ::tolower);
+        
+        map<string,int> mp;
+        vector<string> parawords;
+        //char* tok=strtok(paragraph, " !?',;.");
+        parawords= tokenize(paragraph);
+        
+        for(int i=0;i<parawords.size();i++)
+        {
+            string tok=parawords[i];
+            if(find(banned.begin(), banned.end(),tok)==banned.end())
+            {
+                if(mp.find(tok)!=mp.end())
+                {
+                    mp[tok]++;
+                }
+                else
+                {
+                    mp[tok]=1;
+                }
+            }
+            //tok=strtok(NULL," !?',;.");
+        }
+        
+        int max_count=numeric_limits<int>::min();
+        string ans;
+        for(auto x=mp.begin(); x!=mp.end();x++)
+        {
+            cout<<x->first<<" : "<<x->second<<"\n";
+            if(x->second>max_count)
+            {
+                max_count=x->second;
+                ans=x->first;
+            }
+        }
+        return ans;
+        
+    }
+};
