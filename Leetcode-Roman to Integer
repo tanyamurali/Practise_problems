@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> nums{1000,500,100,50,10,5,1};
+    //vector<string> symbols{"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+    vector<char> symbols{'M','D','C','L','X','V','I'};
+    
+    map<char, int> mp {{'M',1000},{'D',500},{'C',100},{'L',50},{'X',10},{'V',5},{'I',1}};
+    
+    int romanToInt(string s) {
+        
+        int num=0;
+        int slen= s.length();
+        
+        char curr_sym=s[slen-1], prev_sym;
+        num+=mp[curr_sym];
+        
+        for(int i=slen-2;i>=0;i--)
+        {
+            //cout<<"curr: num :"<<curr_sym<<"\t"<<num<<"\n";
+            
+            int x= mp[s[i]];
+            int y= mp[curr_sym];
+            prev_sym=curr_sym;
+            curr_sym=s[i];
+            
+            if(x>=y)
+            {
+                num+= x;
+            }
+            else{
+                num-=x;
+            }
+        }
+        return num;
+    }
+};
