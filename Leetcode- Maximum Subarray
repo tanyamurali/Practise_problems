@@ -1,0 +1,38 @@
+class Solution {
+public:
+    
+    int maxSubArray(vector<int>& nums) {
+    
+        int n = nums.size();
+        vector<int> left_max_sum(n);
+        vector<int> right_max_sum(n);
+        vector<int> final_max_sum(n);
+        
+        
+        
+        left_max_sum[0]=nums[0];
+        right_max_sum[n-1]=nums[n-1];
+        
+        for(int i=1;i<n;i++)
+        {
+            left_max_sum[i] = max((left_max_sum[i-1]+nums[i]),nums[i]); 
+        }
+        
+        for(int i=n-2;i>=0;i--)
+        {
+            right_max_sum[i] = max((right_max_sum[i+1]+nums[i]), nums[i]);
+        }
+        
+        // final list=> max of left/right/(left+right-num[i])
+        int res=numeric_limits<int>::min();
+        
+        for(int i=0;i<n;i++)
+        {
+            int m_temp=max(left_max_sum[i],right_max_sum[i]);
+            final_max_sum[i]=max(m_temp,(left_max_sum[i]+right_max_sum[i]-nums[i]));
+            
+            if(final_max_sum[i]>res) res=final_max_sum[i];
+        }
+        return res;
+    }
+};
