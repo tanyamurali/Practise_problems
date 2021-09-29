@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        
+        // whenever lowest buying price changes , highest selling price will be reset, 
+        // save curr_max= curr_max_sp - curr_lowest_bp
+        
+        //int curr_max_sp= numeric_limits<int>::min();
+        //int curr_min_cp= numeric_limits<int>::max();
+        
+        int curr_max_sp=prices[0];
+        int curr_min_cp=prices[0];
+        
+        int prev_ans=0;
+        for(int i=1;i<prices.size();i++)
+        {
+            if(prices[i]<curr_min_cp)
+            {
+                if(prev_ans < (curr_max_sp - curr_min_cp)){
+                    prev_ans = curr_max_sp - curr_min_cp;
+                }
+                curr_min_cp=prices[i];
+                curr_max_sp=prices[i];
+            }
+            else
+            {
+                if(prices[i]>curr_max_sp)
+                {
+                    curr_max_sp=prices[i];
+                }
+            }
+        }
+        
+        if(prev_ans < (curr_max_sp - curr_min_cp)){
+            prev_ans = curr_max_sp - curr_min_cp;
+        }
+        
+        return prev_ans;
+    }
+};
