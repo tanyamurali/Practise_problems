@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        int i=1;
+        vector<int> v;
+        v.push_back(1);
+        
+        vector<vector<int>> ans;
+        
+        ans.push_back(v);
+        
+        while(i<numRows)
+        {
+            i++; // row
+            v.clear();
+            v.push_back(1);
+            //v[i-1]=1;
+            
+            for(int j=1;j<i-1;j++)
+            {
+                v.push_back(ans[i-2][j-1]+ ans[i-2][j]);
+            }
+            v.push_back(1);
+            ans.push_back(v);
+        }
+        return ans;
+    }
+};
