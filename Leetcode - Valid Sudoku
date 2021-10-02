@@ -1,0 +1,97 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        int ColHash[9][10];
+        int RowHash[9][10];
+        int BlockHash[9][10];
+        
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<10;j++)
+            {
+                ColHash[i][j]=0;
+                RowHash[i][j]=0;
+                BlockHash[i][j]=0;
+            }
+        }
+        
+        int n= 9;
+        int m= 9;
+        
+        for(int i=0;i<n;i++)
+        { 
+            for(int j=0; j<m; j++)
+            {
+                //cout<<"hello\n";
+                if(board[i][j]=='.') continue;
+                
+                int val = board[i][j]-48;
+                //cout<<val<<"\n";
+                //cout<<"i , j :"<<i<<"\t"<<j<<"\n";
+                if(RowHash[i][val]!=0)
+                {
+                    return false;
+                }
+                if(ColHash[j][val]!=0 )
+                {
+                    return false;
+                }
+                RowHash[i][val]++;
+                ColHash[j][val]++;
+                
+                /*
+                if 0<=i<=2, 0<=j<=2  -> 1
+                */
+                
+                if(i>=0 && i<=2 && j>=0 && j<=2)
+                {
+                    if(BlockHash[0][val]!=0) return false;
+                    BlockHash[0][val]=1;
+                }
+                else if(i>=0 && i<=2 && j>=3 && j<=5)
+                {
+                    if(BlockHash[1][val]!=0) return false;
+                    BlockHash[1][val]=1;
+                }
+                else if(i>=0 && i<=2 && j>=6 && j<=8)
+                {
+                    if(BlockHash[2][val]!=0) return false;
+                    BlockHash[2][val]=1;
+                }
+                else if(i>=3 && i<=5 && j>=0 && j<=2)
+                {
+                    if(BlockHash[3][val]!=0) return false;
+                    BlockHash[3][val]=1;
+                }
+                else if(i>=3 && i<=5 && j>=3 && j<=5)
+                {
+                    if(BlockHash[4][val]!=0) return false;
+                    BlockHash[4][val]=1;
+                }
+                else if(i>=3 && i<=5 && j>=6 && j<=8)
+                {
+                    if(BlockHash[5][val]!=0) return false;
+                    BlockHash[5][val]=1;
+                }
+                else if(i>=6 && i<=8 && j>=0 && j<=2)
+                {
+                    if(BlockHash[6][val]!=0) return false;
+                    BlockHash[6][val]=1;
+                }
+                else if(i>=6 && i<=8 && j>=3 && j<=5)
+                {
+                    if(BlockHash[7][val]!=0) return false;
+                    BlockHash[7][val]=1;
+                }
+                else if(i>=6 && i<=8 && j>=6 && j<=8)
+                {
+                    if(BlockHash[8][val]!=0) return false;
+                    BlockHash[8][val]=1;
+                }
+
+            }
+        }
+        cout<<ColHash[0][8]<<"\n";
+        return true;
+    }
+};
