@@ -1,0 +1,81 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    
+    
+    int listLength(ListNode* L) {
+        int n=0;
+        while(L) {
+            L=L->next;
+            n++;
+        }
+        return n;
+    }
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        /* Brute Force 
+        
+        while(headA!=NULL)
+        {
+            ListNode*B=headB;
+            while(B!=NULL)
+            {
+                if(headA==B)return headA;
+                B=B->next;
+            }
+            headA=headA->next;
+        }
+        return NULL;
+        
+        */ 
+        
+        /* Map 
+        
+        unordered_map< ListNode* , bool> mp;
+        
+        while(headB!=NULL)
+        {
+            mp[headB]=true;
+            headB=headB->next;
+        }
+        
+        while(headA!=NULL){
+            if(mp.count(headA))return headA;
+            headA=headA->next;
+        }
+        return NULL;
+        
+        */
+        
+        /* Best approach by making list equilength by moving longer list forward */
+        
+        int nA = listLength(headA);
+        int nB = listLength(headB);
+        
+        int diff = abs(nA-nB);
+        
+        // B must be longer list
+        if(nA>nB) swap(headA,headB);
+        
+        while(diff) {
+            headB=headB->next;
+            diff--;
+        }
+         // both head pointers are now equidistant from the intersection -> only works if complete LL after intersection is common
+        
+        while(headA && headB)
+        {
+            if(headA==headB) return headA;
+            headA=headA->next;
+            headB=headB->next;
+        }
+        
+        return NULL;
+    }
+};
