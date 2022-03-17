@@ -1,0 +1,35 @@
+// #include<algorithm>
+class Solution {
+public:
+    void operation(string token, stack<int> &st) {
+        int n = st.top();
+        st.pop();
+        int m = st.top();
+        st.pop();
+
+        if(token=="+") {
+            st.push(m+n);
+        } else if(token=="-") {
+            st.push(m-n);
+        } else if(token=="*") {
+            st.push(m*n);
+        } else {
+            st.push(m/n);
+        }
+    }
+    int evalRPN(vector<string>& tokens) {
+        stack<int> st;
+        
+        for(int i=0; i<tokens.size(); i++) {
+            
+            if(tokens[i]=="+" || tokens[i]=="-" || tokens[i]=="*" || tokens[i]=="/") {
+                operation(tokens[i],st);
+            }else {
+                int a = stoi(tokens[i]);
+                st.push(a);
+            }
+        }
+        if(!st.empty()) return st.top();
+        else return 0;
+    }
+};
