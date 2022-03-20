@@ -1,0 +1,33 @@
+class Solution {
+public:
+    
+    bool checkValid(string s, int start, int end) {
+        while(start<end) {
+            if(s[start]!=s[end]) {
+                return false;
+            }
+            start++;
+            end--;            
+        }
+        return true;
+    }
+    bool validPalindrome(string s) { 
+        //changed parameter 0=> notchanged, 1=> changed cannot change again, if(changed && not palindrome)return false 
+        int start=0;
+        int end=s.length()-1;
+        
+        while(start<end) {
+            if(s[start]!=s[end]) {
+                if(checkValid(s,start+1, end) || checkValid(s,start,end-1)) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            start++;
+            end--;
+        }
+        return true;
+    } 
+};
