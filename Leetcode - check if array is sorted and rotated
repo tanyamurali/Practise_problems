@@ -1,0 +1,28 @@
+class Solution {
+public:
+    
+    bool check_func(vector<int> nums, int n, int* count) {
+        if(n==0 || n==1) return true;
+        
+        if(nums[0]>nums[1] && *count) {
+            return false;
+        } 
+        if(nums[0]> nums[1]) {
+            
+            nums.erase(nums.begin());
+            *count=1;
+            return check_func(nums,n-1,count) ;
+        }
+        
+        nums.erase(nums.begin());
+        return check_func(nums, n-1,count) ;
+    }
+    bool check(vector<int>& nums) {
+        int count = 0;
+        bool ans = check_func(nums, nums.size(), &count);
+        if(!count)
+        return ans;
+        
+        return ans && nums[0]>=nums[nums.size()-1] ;
+    }
+};
