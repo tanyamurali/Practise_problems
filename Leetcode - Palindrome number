@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        
+        if(x<0) return false;
+        if(x<10) return true;
+        
+        vector<int> v;
+        
+        while(x) {
+            v.push_back(x%10);
+            x=x/10;
+        }
+        
+        int start =0, end = v.size()-1;
+       // cout<<end<<"\n";
+        while(start<end) {
+            if(v[start]==v[end]) {
+                start++;
+                end--;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+};
