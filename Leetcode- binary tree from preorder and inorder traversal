@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* construct(vector<int> preO, int sp, int ep, vector<int> inO, int si, int ei) {
+        //cout<< sp<<" "<<ep<<endl;
+        if(sp>ep || si>ei) return NULL;
+        
+        if(sp==ep) {
+            return new TreeNode(preO[sp]);
+        }
+        
+        int ind=si ;
+        for(;ind<ei;ind++) {
+            if(inO[ind]==preO[sp]) {
+                break;
+            }
+        }
+        cout<<ind<<" ";
+        TreeNode* root = new TreeNode(preO[sp]);
+        
+        int num_el_l = ind-si;
+        int num_el_r = ei-ind;
+        
+        
+        int lis=si, lie =ind-1 , lps=sp+1;
+        int lpe = lps+num_el_l-1;
+        int ris= ind+1, rie = ei , rpe=ep;
+        int rps= rpe-num_el_r+1;
+        
+        root->left = construct(preO,lps,lpe,inO,lis,lie);
+        root->right = construct(preO, rps, rpe,inO,ris, rie);
+        
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return construct(preorder, 0, preorder.size()-1, inorder,0,inorder.size()-1);
+    }
+};
